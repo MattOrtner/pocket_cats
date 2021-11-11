@@ -14,6 +14,7 @@ import {
   ScrollView,
   Image,
   FlatList,
+  Button,
   Pressable,
 } from 'react-native';
 import axios from 'axios';
@@ -671,9 +672,7 @@ const App = () => {
     return cats.map((cat, i) => {
       return (
         <Pressable key={i}>
-          <View style={styles.centeredView}>
-            <Text style={styles.modalText}>{cat.name}</Text>
-          </View>
+          <Text style={styles.catButtons}>{cat.name}</Text>
         </Pressable>
       );
     });
@@ -683,7 +682,7 @@ const App = () => {
     <ScrollView>
       {cats.length > 2 ? (
         <>
-          <Text>pocket_cats</Text>
+          <Text style={styles.title}>Pocket_Cats</Text>
           <View style={styles.centeredView}>{catList()}</View>
         </>
       ) : (
@@ -694,6 +693,15 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  title: {
+    elevation: 4,
+    fontSize: 32,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    paddingBottom: 20,
+    borderColor: 'red',
+    fontWeight: '900',
+  },
   button: {
     borderRadius: 20,
     padding: 10,
@@ -710,9 +718,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  modalText: {
+  catButtons: {
     marginBottom: 15,
     textAlign: 'center',
+    backgroundColor: 'white',
   },
 });
 
