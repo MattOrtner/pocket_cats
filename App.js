@@ -33,71 +33,80 @@ const App = () => {
     })();
   }, []);
 
+  const CatCard = ({cat}) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    return (
+      <>
+        <Pressable key={cat.id} onPress={() => setIsExpanded(!isExpanded)}>
+          <View style={styles.catContainer}>
+            {cat.image && (
+              <Image style={styles.image} source={{uri: `${cat.image.url}`}} />
+            )}
+            <Text style={styles.catName}>{cat.name}</Text>
+          </View>
+          {isExpanded && (
+            <Text style={styles.description}>{cat.description}</Text>
+          )}
+        </Pressable>
+      </>
+    );
+  };
+
   const catList = () => {
     return cats.map(cat => {
-      console.log(cat.image, cat.name);
-      return (
-        <Pressable key={cat.id}>
-          {cat.image && (
-            <Image style={styles.image} source={{uri: `${cat.image.url}`}} />
-          )}
-          <Text style={styles.catButtons}>{cat.name}</Text>
-          <Text>{cat.description}</Text>
-        </Pressable>
-      );
+      return <CatCard cat={cat} />;
     });
   };
 
   return (
     <ScrollView>
       {cats.length > 2 ? (
-        <>
+        <View style={styles.catBar}>
           <Text style={styles.title}>Pocket_Cats</Text>
           <View style={styles.centeredView}>{catList()}</View>
-        </>
+        </View>
       ) : (
-        <Text>nothing here...</Text>
+        <Text>Please wait a moment...</Text>
       )}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  catBar: {
+    padding: 15,
+  },
+  catContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'lightgray',
+    borderRadius: 15,
+    paddingBottom: 5,
+  },
   title: {
-    elevation: 4,
     fontSize: 32,
     fontStyle: 'italic',
     textAlign: 'center',
+    paddingTop: 15,
     paddingBottom: 20,
-    borderColor: 'red',
     fontWeight: '900',
   },
   image: {
     height: 100,
     width: 100,
+    left: 20,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  catButtons: {
-    marginBottom: 15,
+  catName: {
     textAlign: 'center',
     fontSize: 16,
-    backgroundColor: 'white',
     letterSpacing: 0.25,
+    backgroundColor: 'lightgray',
+    flex: 1,
+    zIndex: -1,
+  },
+  description: {
+    flex: 1,
   },
 });
 
