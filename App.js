@@ -9,16 +9,27 @@
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
+  Platform,
   Text,
   View,
   ScrollView,
   Image,
   Pressable,
+  UIManager,
+  LayoutAnimation,
+  TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
 
 const App = () => {
+  if (
+    Platform.OS === 'android' &&
+    UIManager.setLayoutAnimationEnabledExperimental
+  ) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+
   const [cats, setCats] = useState(DEFAULT_DATA);
   useEffect(() => {
     (async () => {
@@ -35,9 +46,13 @@ const App = () => {
 
   const CatCard = ({cat}) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const animate = () => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+      setIsExpanded(!isExpanded);
+    };
     return (
       <>
-        <Pressable key={cat.id} onPress={() => setIsExpanded(!isExpanded)}>
+        <Pressable key={cat.id} onPress={animate}>
           <View style={styles.catContainer}>
             {cat.image && (
               <Image style={styles.image} source={{uri: `${cat.image.url}`}} />
