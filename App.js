@@ -17,7 +17,6 @@ import {
   Pressable,
   UIManager,
   LayoutAnimation,
-  Alert,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
@@ -31,8 +30,8 @@ const App = () => {
   }
 
   const [cats, setCats] = useState(DEFAULT_DATA);
+  const [favorites, setFavorites] = useState([0, 1, 2, 3]);
 
-  const [favorites, setFavorites] = useState(cats.slice(0, 3));
   useEffect(() => {
     (async () => {
       try {
@@ -76,11 +75,10 @@ const App = () => {
   };
 
   const Favorites = () => {
-    const firstThreeCats = cats.slice(0, 3);
     return (
       <ScrollView>
-        {firstThreeCats.map((cat, i) => (
-          <CatCard cat={cat} key={i} />
+        {favorites.map(i => (
+          <CatCard cat={cats[i]} key={i} />
         ))}
       </ScrollView>
     );
@@ -156,12 +154,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 15,
     height: 90,
-    // shadowColor: '#7F5DF0',
     shadowOffset: {
       width: 10,
-      height: 10,
+      height: 30,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.75,
     shadowRadius: 3.5,
     elevation: 5,
   },
