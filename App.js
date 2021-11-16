@@ -17,7 +17,7 @@ import {
   Pressable,
   UIManager,
   LayoutAnimation,
-  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
@@ -47,7 +47,7 @@ const App = () => {
   const CatCard = ({cat}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const animate = () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setIsExpanded(!isExpanded);
     };
     return (
@@ -68,26 +68,74 @@ const App = () => {
   };
 
   const catList = () => {
-    return cats.map(cat => {
-      return <CatCard cat={cat} />;
+    return cats.map((cat, i) => {
+      return <CatCard cat={cat} key={i} />;
     });
   };
 
+  const ourAlert = () => {
+    Alert.alert('alert!');
+  };
   return (
-    <ScrollView>
-      {cats.length > 2 ? (
-        <View style={styles.catBar}>
-          <Text style={styles.title}>Pocket_Cats</Text>
-          <View style={styles.centeredView}>{catList()}</View>
-        </View>
-      ) : (
-        <Text>Please wait a moment...</Text>
-      )}
-    </ScrollView>
+    <View>
+      <ScrollView style={styles.topContainer}>
+        {cats.length > 2 ? (
+          <View style={styles.catBar}>
+            <Text style={styles.title}>Pocket_Cats</Text>
+            <ScrollView style={styles.centeredView}>{catList()}</ScrollView>
+          </View>
+        ) : (
+          <View>
+            <Text>Please wait a moment...</Text>
+          </View>
+        )}
+      </ScrollView>
+      <View style={styles.navBar}>
+        <Pressable onPress={ourAlert} style={styles.navButton}>
+          <Text style={styles.navButtonText}>CatList</Text>
+        </Pressable>
+        <Pressable onPress={ourAlert} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Favorites</Text>
+        </Pressable>
+        <Pressable onPress={ourAlert} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Home</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  navButton: {
+    flex: 1,
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  navButtonText: {
+    textAlign: 'center',
+    zIndex: -1,
+  },
+  navBar: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+    left: 10,
+    right: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 15,
+    height: 90,
+    shadowColor: '#7F5DF0',
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 5,
+  },
+  topContainer: {
+    // flex: 8,
+  },
   catBar: {
     padding: 15,
   },
@@ -122,6 +170,7 @@ const styles = StyleSheet.create({
   },
   description: {
     flex: 1,
+    textAlign: 'center',
   },
 });
 
