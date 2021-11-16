@@ -17,7 +17,7 @@ import {
   Pressable,
   UIManager,
   LayoutAnimation,
-  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
@@ -31,6 +31,8 @@ const App = () => {
   }
 
   const [cats, setCats] = useState(DEFAULT_DATA);
+
+  const [favorites, setFavorites] = useState(cats.slice(0, 3));
   useEffect(() => {
     (async () => {
       try {
@@ -47,7 +49,7 @@ const App = () => {
   const CatCard = ({cat}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const animate = () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setIsExpanded(!isExpanded);
     };
     return (
@@ -68,28 +70,107 @@ const App = () => {
   };
 
   const catList = () => {
-    return cats.map(cat => {
-      return <CatCard cat={cat} />;
+    return cats.map((cat, i) => {
+      return <CatCard cat={cat} key={i} />;
     });
   };
 
+  const Favorites = () => {
+    const firstThreeCats = cats.slice(0, 3);
+    return (
+      <ScrollView>
+        {firstThreeCats.map((cat, i) => (
+          <CatCard cat={cat} key={i} />
+        ))}
+      </ScrollView>
+    );
+  };
+
+  const Home = () => {
+    return (
+      <View style={{flex: 1}}>
+        <Text style={{fontSize: 42}}>Profile</Text>
+        <Text style={{fontSize: 64}}>PHOTO</Text>
+        <Text style={{fontSize: 16}}>Name:</Text>
+        <Text style={{fontSize: 16}}>Description:</Text>
+        <Text style={{fontSize: 64}}>Your CATS!</Text>
+        <Text style={{fontSize: 64, marginBottom: 100}}>
+          PHOTOS.OF.YOUR.CATS
+        </Text>
+      </View>
+    );
+  };
+  const router = [catList, Favorites, Home];
+  const [view, setView] = useState(0);
+
   return (
-    <ScrollView>
-      {cats.length > 2 ? (
-        <View style={styles.catBar}>
-          <Text style={styles.title}>Pocket_Cats</Text>
-          <View style={styles.centeredView}>{catList()}</View>
-        </View>
-      ) : (
-        <Text>Please wait a moment...</Text>
-      )}
-    </ScrollView>
+    <View style={{flex: 1}}>
+      <ScrollView style={styles.topContainer}>
+        <Text style={styles.title}>Pocket_Cats</Text>
+        {cats.length > 2 ? (
+          <View style={styles.catBar}>
+            <ScrollView style={styles.centeredView}>
+              {router[view]()}
+            </ScrollView>
+          </View>
+        ) : (
+          <View>
+            <Text>Please wait a moment...</Text>
+          </View>
+        )}
+      </ScrollView>
+      <View style={styles.navBar}>
+        <Pressable onPress={() => setView(0)} style={styles.navButton}>
+          <Text style={styles.navButtonText}>CatList</Text>
+        </Pressable>
+        <Pressable onPress={() => setView(1)} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Favorites</Text>
+        </Pressable>
+        <Pressable onPress={() => setView(2)} style={styles.navButton}>
+          <Text style={styles.navButtonText}>Home</Text>
+        </Pressable>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+  },
+  navButton: {
+    flex: 1,
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
+  navButtonText: {
+    textAlign: 'center',
+    zIndex: -1,
+  },
+  navBar: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 20,
+    left: 10,
+    right: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 15,
+    height: 90,
+    // shadowColor: '#7F5DF0',
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.5,
+    elevation: 5,
+  },
+  topContainer: {
+    // flex: 8,
+  },
   catBar: {
     padding: 15,
+    flex: 1,
   },
   catContainer: {
     flexDirection: 'row',
@@ -122,6 +203,7 @@ const styles = StyleSheet.create({
   },
   description: {
     flex: 1,
+    textAlign: 'center',
   },
 });
 
