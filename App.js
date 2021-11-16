@@ -31,6 +31,8 @@ const App = () => {
   }
 
   const [cats, setCats] = useState(DEFAULT_DATA);
+
+  const [favorites, setFavorites] = useState(cats.slice(0, 3));
   useEffect(() => {
     (async () => {
       try {
@@ -73,16 +75,43 @@ const App = () => {
     });
   };
 
-  const ourAlert = () => {
-    Alert.alert('alert!');
+  const Favorites = () => {
+    const firstThreeCats = cats.slice(0, 3);
+    return (
+      <ScrollView>
+        {firstThreeCats.map((cat, i) => (
+          <CatCard cat={cat} key={i} />
+        ))}
+      </ScrollView>
+    );
   };
+
+  const Home = () => {
+    return (
+      <View style={{flex: 1}}>
+        <Text style={{fontSize: 42}}>Profile</Text>
+        <Text style={{fontSize: 64}}>PHOTO</Text>
+        <Text style={{fontSize: 16}}>Name:</Text>
+        <Text style={{fontSize: 16}}>Description:</Text>
+        <Text style={{fontSize: 64}}>Your CATS!</Text>
+        <Text style={{fontSize: 64, marginBottom: 100}}>
+          PHOTOS.OF.YOUR.CATS
+        </Text>
+      </View>
+    );
+  };
+  const router = [catList, Favorites, Home];
+  const [view, setView] = useState(0);
+
   return (
-    <View>
+    <View style={{flex: 1}}>
       <ScrollView style={styles.topContainer}>
+        <Text style={styles.title}>Pocket_Cats</Text>
         {cats.length > 2 ? (
           <View style={styles.catBar}>
-            <Text style={styles.title}>Pocket_Cats</Text>
-            <ScrollView style={styles.centeredView}>{catList()}</ScrollView>
+            <ScrollView style={styles.centeredView}>
+              {router[view]()}
+            </ScrollView>
           </View>
         ) : (
           <View>
@@ -91,13 +120,13 @@ const App = () => {
         )}
       </ScrollView>
       <View style={styles.navBar}>
-        <Pressable onPress={ourAlert} style={styles.navButton}>
+        <Pressable onPress={() => setView(0)} style={styles.navButton}>
           <Text style={styles.navButtonText}>CatList</Text>
         </Pressable>
-        <Pressable onPress={ourAlert} style={styles.navButton}>
+        <Pressable onPress={() => setView(1)} style={styles.navButton}>
           <Text style={styles.navButtonText}>Favorites</Text>
         </Pressable>
-        <Pressable onPress={ourAlert} style={styles.navButton}>
+        <Pressable onPress={() => setView(2)} style={styles.navButton}>
           <Text style={styles.navButtonText}>Home</Text>
         </Pressable>
       </View>
@@ -106,6 +135,9 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+  },
   navButton: {
     flex: 1,
     textAlign: 'center',
@@ -124,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 15,
     height: 90,
-    shadowColor: '#7F5DF0',
+    // shadowColor: '#7F5DF0',
     shadowOffset: {
       width: 10,
       height: 10,
@@ -138,6 +170,7 @@ const styles = StyleSheet.create({
   },
   catBar: {
     padding: 15,
+    flex: 1,
   },
   catContainer: {
     flexDirection: 'row',
