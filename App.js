@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
+import CatCard from './components/CatCard';
 
 const App = () => {
   if (
@@ -45,32 +46,9 @@ const App = () => {
     })();
   }, []);
 
-  const CatCard = ({cat}) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const animate = () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setIsExpanded(!isExpanded);
-    };
-    return (
-      <>
-        <Pressable key={cat.id} onPress={animate}>
-          <View style={styles.catContainer}>
-            {cat.image && (
-              <Image style={styles.image} source={{uri: `${cat.image.url}`}} />
-            )}
-            <Text style={styles.catName}>{cat.name}</Text>
-          </View>
-          {isExpanded && (
-            <Text style={styles.description}>{cat.description}</Text>
-          )}
-        </Pressable>
-      </>
-    );
-  };
-
   const catList = () => {
     return cats.map((cat, i) => {
-      return <CatCard cat={cat} key={i} />;
+      return <CatCard cat={cat} styles={styles} key={i} />;
     });
   };
 
@@ -102,7 +80,7 @@ const App = () => {
   const [view, setView] = useState(0);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#f35e5eed'}}>
       <ScrollView style={styles.topContainer}>
         <Text style={styles.title}>Pocket_Cats</Text>
         {cats.length > 2 ? (
@@ -201,6 +179,9 @@ const styles = StyleSheet.create({
   description: {
     flex: 1,
     textAlign: 'center',
+  },
+  catCardOuter: {
+    paddingBottom: 5,
   },
 });
 
