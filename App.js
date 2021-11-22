@@ -45,7 +45,6 @@ const App = () => {
   }, []);
 
   const catList = () => {
-    console.log(cats.length);
     return cats.map((cat, i) => {
       return <CatCard cat={cat} styles={styles} key={i} />;
     });
@@ -54,6 +53,7 @@ const App = () => {
   const Favorites = () => {
     return (
       <ScrollView>
+        <Text>Favorites</Text>
         {favorites.map(i => (
           <CatCard cat={cats[i]} key={i} />
         ))}
@@ -106,32 +106,32 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
   },
-  navButton: {
-    flex: 1,
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-  navButtonText: {
-    textAlign: 'center',
-    zIndex: -1,
-  },
-  navBar: {
-    flexDirection: 'row',
-    position: 'absolute',
-    bottom: 20,
-    left: 10,
-    right: 10,
-    backgroundColor: '#ffffff',
-    borderRadius: 15,
-    height: 90,
-    shadowOffset: {
-      width: 10,
-      height: 30,
-    },
-    shadowOpacity: 0.75,
-    shadowRadius: 3.5,
-    elevation: 5,
-  },
+  // navButton: {
+  //   flex: 1,
+  //   textAlign: 'center',
+  //   justifyContent: 'center',
+  // },
+  // navButtonText: {
+  //   textAlign: 'center',
+  //   zIndex: -1,
+  // },
+  // navBar: {
+  //   flexDirection: 'row',
+  //   position: 'absolute',
+  //   bottom: 20,
+  //   left: 10,
+  //   right: 10,
+  //   backgroundColor: '#ffffff',
+  //   borderRadius: 15,
+  //   height: 90,
+  //   shadowOffset: {
+  //     width: 10,
+  //     height: 30,
+  //   },
+  //   shadowOpacity: 0.75,
+  //   shadowRadius: 3.5,
+  //   elevation: 5,
+  // },
   catBar: {
     padding: 15,
     flex: 1,

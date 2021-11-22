@@ -14,36 +14,7 @@ const CatCard = ({cat}) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsExpanded(!isExpanded);
   };
-  const styles = StyleSheet.create({
-    catCardOuter: {
-      paddingBottom: 5,
-      flex: 1,
-    },
-    catContainer: {
-      flex: 1,
-      flexDirection: 'column',
-      backgroundColor: 'lightgray',
-      borderRadius: 15,
-      paddingBottom: 5,
-    },
-    image: {
-      height: 100,
-      width: 100,
-    },
-    description: {
-      flex: 1,
-      textAlign: 'center',
-    },
-    true: {
-      height: 200,
-      width: 200,
-    },
-    catCardPicAndName: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
-    },
-  });
+
   const descriptionStarter = description => {
     let beginningOfDescription = '';
     for (let letter = 0; letter < 41; letter++) {
@@ -67,11 +38,19 @@ const CatCard = ({cat}) => {
           </View>
           {isExpanded || (
             <Text style={styles.description}>
-              {descriptionStarter(cat.description, cat.id)}
+              {descriptionStarter(cat.description)}
             </Text>
           )}
           {isExpanded && (
-            <Text style={styles.description}>{cat.description}</Text>
+            <View>
+              <Text style={styles.description}>{cat.description}</Text>
+              <Text style={[styles.description, styles.border]}>
+                child friendly: {cat.child_friendly}
+              </Text>
+              <Text style={[styles.description, styles.border]}>
+                grooming: {cat.grooming}
+              </Text>
+            </View>
           )}
         </View>
       </Pressable>
@@ -79,4 +58,37 @@ const CatCard = ({cat}) => {
   );
 };
 
+const styles = StyleSheet.create({
+  border: {borderWidth: 4, borderColor: '#20232a'},
+  catCardOuter: {
+    paddingBottom: 5,
+    flex: 1,
+  },
+  catContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'lightgray',
+    borderRadius: 15,
+    paddingBottom: 5,
+  },
+  image: {
+    top: 10,
+    height: 150,
+    width: 200,
+  },
+  description: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  true: {
+    height: 200,
+    width: 200,
+  },
+  catCardPicAndName: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+});
 export default CatCard;
