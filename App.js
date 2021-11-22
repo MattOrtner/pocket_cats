@@ -13,14 +13,12 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
-  Pressable,
   UIManager,
-  LayoutAnimation,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
 import CatCard from './components/CatCard';
+import {NavBar} from './components/NavBar';
 
 const App = () => {
   if (
@@ -47,6 +45,7 @@ const App = () => {
   }, []);
 
   const catList = () => {
+    console.log(cats.length);
     return cats.map((cat, i) => {
       return <CatCard cat={cat} styles={styles} key={i} />;
     });
@@ -91,26 +90,19 @@ const App = () => {
           </View>
         ) : (
           <View>
-            <Text>Please wait a moment...</Text>
+            <Text style={styles.loadingScreen}>Please wait a moment...</Text>
           </View>
         )}
       </ScrollView>
-      <View style={styles.navBar}>
-        <Pressable onPress={() => setView(0)} style={styles.navButton}>
-          <Text style={styles.navButtonText}>CatList</Text>
-        </Pressable>
-        <Pressable onPress={() => setView(1)} style={styles.navButton}>
-          <Text style={styles.navButtonText}>Favorites</Text>
-        </Pressable>
-        <Pressable onPress={() => setView(2)} style={styles.navButton}>
-          <Text style={styles.navButtonText}>Home</Text>
-        </Pressable>
-      </View>
+      <NavBar styles={styles} setView={setView} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  loadingScreen: {
+    textAlign: 'center',
+  },
   centeredView: {
     flex: 1,
   },
@@ -140,20 +132,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.5,
     elevation: 5,
   },
-  topContainer: {
-    // flex: 8,
-  },
   catBar: {
     padding: 15,
     flex: 1,
-  },
-  catContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'lightgray',
-    borderRadius: 15,
-    paddingBottom: 5,
   },
   title: {
     fontSize: 32,
@@ -175,13 +156,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     flex: 1,
     zIndex: -1,
-  },
-  description: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  catCardOuter: {
-    paddingBottom: 5,
   },
 });
 
