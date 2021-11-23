@@ -29,7 +29,7 @@ const App = () => {
   }
 
   const [cats, setCats] = useState(DEFAULT_DATA);
-  const [favorites, setFavorites] = useState([0, 1, 2, 3]);
+  const [favorites, setFavorites] = useState([5, 6, 7]);
 
   useEffect(() => {
     (async () => {
@@ -79,8 +79,7 @@ const App = () => {
     );
   };
   const router = [catList, Home, Favorites];
-  const [view, setView] = useState(0);
-
+  const [view, setView] = useState(1);
   return (
     <View style={{flex: 1, backgroundColor: '#f35e5eed'}}>
       <ScrollView style={styles.topContainer}>

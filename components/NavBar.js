@@ -3,7 +3,7 @@ import {View, Pressable, Text, StyleSheet} from 'react-native';
 
 export const NavBar = ({setView}) => {
   const [listPress, setListPress] = useState(false);
-  const [homePress, setHomePress] = useState(false);
+  const [homePress, setHomePress] = useState(true);
   const [favoritesPress, setFavoritesPress] = useState(false);
 
   const buttonPress = view => {
@@ -74,31 +74,19 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     textAlignVertical: 'center',
-    fontStyle: 'italic',
+    shadowRadius: 30,
+    shadowColor: 'black',
+    backgroundColor: '#9ecfff',
+    elevation: 10,
     shadowOffset: {
-      width: 10,
-      height: 30,
+      width: 50,
+      height: 50,
     },
     shadowOpacity: 1,
-    shadowRadius: 3.5,
-    backgroundColor: '#9ecfff',
-    elevation: 5,
   },
   navButtonContainer: {
-    // borderWidth: 2,
-    // borderColor: '#20232a',
-    borderRadius: 50,
-    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowOffset: {
-      width: 10,
-      height: 30,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 3.5,
-    backgroundColor: '#9ecfff',
-    elevation: 5,
   },
   navButton: {
     flex: 1,
