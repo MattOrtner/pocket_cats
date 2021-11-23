@@ -75,7 +75,7 @@ const App = () => {
       </View>
     );
   };
-  const router = [catList, Favorites, Home];
+  const router = [catList, Home, Favorites];
   const [view, setView] = useState(0);
 
   return (
@@ -94,7 +94,7 @@ const App = () => {
           </View>
         )}
       </ScrollView>
-      <NavBar styles={styles} setView={setView} />
+      <NavBar styles={styles} view={view} setView={setView} />
     </View>
   );
 };
