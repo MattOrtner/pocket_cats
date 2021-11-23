@@ -44,12 +44,14 @@ const CatCard = ({cat}) => {
           {isExpanded && (
             <View>
               <Text style={styles.description}>{cat.description}</Text>
-              <Text style={[styles.description, styles.border]}>
-                child friendly: {cat.child_friendly}
-              </Text>
-              <Text style={[styles.description, styles.border]}>
-                grooming: {cat.grooming}
-              </Text>
+              <View style={styles.bulletGrouping}>
+                <Text style={[styles.bulletPoint, styles.border]}>
+                  vocalisation: {cat.vocalisation}
+                </Text>
+                <Text style={[styles.bulletPoint, styles.border]}>
+                  affection level: {cat.affection_level}
+                </Text>
+              </View>
             </View>
           )}
         </View>
@@ -59,7 +61,12 @@ const CatCard = ({cat}) => {
 };
 
 const styles = StyleSheet.create({
-  border: {borderWidth: 4, borderColor: '#20232a'},
+  bulletGrouping: {},
+  border: {
+    borderWidth: 2,
+    borderColor: '#20232a',
+    textAlign: 'center',
+  },
   catCardOuter: {
     paddingBottom: 5,
     flex: 1,

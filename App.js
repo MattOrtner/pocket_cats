@@ -75,7 +75,7 @@ const App = () => {
       </View>
     );
   };
-  const router = [catList, Favorites, Home];
+  const router = [catList, Home, Favorites];
   const [view, setView] = useState(0);
 
   return (
@@ -94,7 +94,7 @@ const App = () => {
           </View>
         )}
       </ScrollView>
-      <NavBar styles={styles} setView={setView} />
+      <NavBar styles={styles} view={view} setView={setView} />
     </View>
   );
 };
@@ -106,32 +106,6 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
   },
-  // navButton: {
-  //   flex: 1,
-  //   textAlign: 'center',
-  //   justifyContent: 'center',
-  // },
-  // navButtonText: {
-  //   textAlign: 'center',
-  //   zIndex: -1,
-  // },
-  // navBar: {
-  //   flexDirection: 'row',
-  //   position: 'absolute',
-  //   bottom: 20,
-  //   left: 10,
-  //   right: 10,
-  //   backgroundColor: '#ffffff',
-  //   borderRadius: 15,
-  //   height: 90,
-  //   shadowOffset: {
-  //     width: 10,
-  //     height: 30,
-  //   },
-  //   shadowOpacity: 0.75,
-  //   shadowRadius: 3.5,
-  //   elevation: 5,
-  // },
   catBar: {
     padding: 15,
     flex: 1,
@@ -140,7 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontStyle: 'italic',
     textAlign: 'center',
-    paddingTop: 15,
+    paddingTop: 50,
     paddingBottom: 20,
     fontWeight: '900',
   },

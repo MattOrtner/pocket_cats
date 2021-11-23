@@ -1,23 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Pressable, Text, StyleSheet} from 'react-native';
 
 export const NavBar = ({setView}) => {
+  const [listPress, setListPress] = useState(false);
+  const [homePress, setHomePress] = useState(false);
+  const [favoritesPress, setFavoritesPress] = useState(false);
+
+  const buttonPress = view => {
+    if (view === 0) {
+      setListPress(true);
+      setHomePress(false);
+      setFavoritesPress(false);
+    } else if (view === 1) {
+      setListPress(false);
+      setHomePress(true);
+      setFavoritesPress(false);
+    } else {
+      setListPress(false);
+      setHomePress(false);
+      setFavoritesPress(true);
+    }
+    setView(view);
+  };
+
   return (
     <View style={styles.navBar}>
-      <Pressable onPress={() => setView(0)} style={styles.navButton}>
-        <Text style={styles.navButtonText}>CatList</Text>
+      <Pressable onPress={() => buttonPress(0)} style={styles.navButton}>
+        <Text style={[styles.navButtonText]}>CatList</Text>
       </Pressable>
-      <Pressable onPress={() => setView(1)} style={styles.navButton}>
+      <Pressable onPress={() => buttonPress(1)} style={styles.navButton}>
+        <View style={styles.homeButtonCircle}>
+          <Text style={[styles.homeButton, styles.navButtonText]}>Home</Text>
+        </View>
+      </Pressable>
+      <Pressable onPress={() => buttonPress(2)} style={styles.navButton}>
         <Text style={styles.navButtonText}>Favorites</Text>
-      </Pressable>
-      <Pressable onPress={() => setView(2)} style={styles.navButton}>
-        <Text style={styles.navButtonText}>Home</Text>
       </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  listPress: {
+    backgroundColor: 'blue',
+  },
+  homeButtonCircle: {
+    borderWidth: 2,
+    borderColor: '#20232a',
+    borderRadius: 50,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowOffset: {
+      width: 10,
+      height: 30,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 3.5,
+    backgroundColor: '#9ecfff',
+    elevation: 5,
+  },
   navButton: {
     flex: 1,
     textAlign: 'center',
@@ -30,7 +72,7 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: 10,
+    bottom: 15,
     left: 10,
     right: 10,
     backgroundColor: '#9ecfff',
