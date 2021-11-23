@@ -37,7 +37,10 @@ const App = () => {
         const cat_obj = await axios.get(
           `https://api.thecatapi.com/v1/breeds?=${process.env.REACT_APP_HEADER}=${process.env.REACT_APP_API_KEY}`,
         );
-        setCats(cat_obj.data);
+        if (cat_obj) {
+          const half = Math.round(cat_obj.data.length / 2);
+          setCats([...cat_obj.data.slice(0, half)]);
+        }
       } catch (error) {
         console.error(error);
       }

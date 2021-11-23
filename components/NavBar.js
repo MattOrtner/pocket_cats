@@ -7,6 +7,7 @@ export const NavBar = ({setView}) => {
   const [favoritesPress, setFavoritesPress] = useState(false);
 
   const buttonPress = view => {
+    console.log('view', view);
     if (view === 0) {
       setListPress(true);
       setHomePress(false);
@@ -26,27 +27,66 @@ export const NavBar = ({setView}) => {
   return (
     <View style={styles.navBar}>
       <Pressable onPress={() => buttonPress(0)} style={styles.navButton}>
-        <Text style={[styles.navButtonText]}>CatList</Text>
+        <View style={styles.navButtonContainer}>
+          <Text
+            style={
+              listPress
+                ? [styles.navButtonText, styles.pressed]
+                : styles.navButtonText
+            }>
+            CatList
+          </Text>
+        </View>
       </Pressable>
       <Pressable onPress={() => buttonPress(1)} style={styles.navButton}>
-        <View style={styles.homeButtonCircle}>
-          <Text style={[styles.homeButton, styles.navButtonText]}>Home</Text>
+        <View style={styles.navButtonContainer}>
+          <Text
+            style={
+              homePress
+                ? [styles.navButtonText, styles.pressed]
+                : styles.navButtonText
+            }>
+            Home
+          </Text>
         </View>
       </Pressable>
       <Pressable onPress={() => buttonPress(2)} style={styles.navButton}>
-        <Text style={styles.navButtonText}>Favorites</Text>
+        <View style={styles.navButtonContainer}>
+          <Text
+            style={
+              favoritesPress
+                ? [styles.navButtonText, styles.pressed]
+                : styles.navButtonText
+            }>
+            Favorites
+          </Text>
+        </View>
       </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  listPress: {
-    backgroundColor: 'blue',
-  },
-  homeButtonCircle: {
+  pressed: {
     borderWidth: 2,
     borderColor: '#20232a',
+    borderRadius: 50,
+    height: 80,
+    width: 80,
+    textAlignVertical: 'center',
+    fontStyle: 'italic',
+    shadowOffset: {
+      width: 10,
+      height: 30,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 3.5,
+    backgroundColor: '#9ecfff',
+    elevation: 5,
+  },
+  navButtonContainer: {
+    // borderWidth: 2,
+    // borderColor: '#20232a',
     borderRadius: 50,
     height: 80,
     justifyContent: 'center',
