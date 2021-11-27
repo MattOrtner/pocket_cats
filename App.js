@@ -14,11 +14,23 @@ import {
   View,
   ScrollView,
   UIManager,
+  FlatList,
+  VirtualizedList,
+  Dimensions,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
 import CatCard from './components/CatCard';
 import {NavBar} from './components/NavBar';
+import {assertModuleSpecifier} from '@babel/types';
+
+const DEFAULT_USER = {
+  name: 'Matthew',
+  lastName: 'Ortner',
+  description: 'YeaYea I love my cat big WOOP!',
+};
+
+const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 const App = () => {
   if (
@@ -29,7 +41,8 @@ const App = () => {
   }
 
   const [cats, setCats] = useState(DEFAULT_DATA);
-  const [favorites, setFavorites] = useState([5, 6, 7]);
+  const [indexOfFavorites, setIndexOfFavorites] = useState([5, 6, 7]);
+  const [user, setUser] = useState(DEFAULT_USER);
 
   useEffect(() => {
     (async () => {
@@ -48,55 +61,69 @@ const App = () => {
   }, []);
 
   const catList = () => {
-    return cats.map((cat, i) => {
-      return <CatCard cat={cat} styles={styles} key={i} />;
-    });
+    return (
+      <FlatList
+        data={cats}
+        style={{flex: 1}}
+        renderItem={({item}) => {
+          return <CatCard cat={item} />;
+        }}
+      />
+    );
+  };
+
+  const returnOurFavorites = () => {
+    const favorites = [];
+    for (let i = 0; i < indexOfFavorites.length; i += 1) {
+      favorites.push(cats[indexOfFavorites[i]]);
+    }
+    return favorites;
   };
 
   const Favorites = () => {
     return (
-      <ScrollView>
-        <Text>Favorites</Text>
-        {favorites.map(i => (
-          <CatCard cat={cats[i]} key={i} />
-        ))}
-      </ScrollView>
+      <FlatList
+        data={returnOurFavorites()}
+        style={{flex: 1}}
+        renderItem={({item}) => {
+          return <CatCard cat={item} />;
+        }}
+      />
     );
   };
 
   const Home = () => {
     return (
       <View style={{flex: 1}}>
-        <Text style={{fontSize: 42}}>Profile</Text>
-        <Text style={{fontSize: 64}}>PHOTO</Text>
-        <Text style={{fontSize: 16}}>Name:</Text>
-        <Text style={{fontSize: 16}}>Description:</Text>
-        <Text style={{fontSize: 64}}>Your CATS!</Text>
-        <Text style={{fontSize: 64, marginBottom: 100}}>
-          PHOTOS.OF.YOUR.CATS
-        </Text>
+        {user && (
+          <View style={{flex: 1}}>
+            <Text style={{fontSize: 42}}>Profile</Text>
+            <Text style={{fontSize: 64}}>PHOTO</Text>
+            <Text style={{fontSize: 16}}>Name: {user.name}</Text>
+            <Text style={{fontSize: 16}}>Last: {user.lastName}</Text>
+            <Text style={{fontSize: 16}}>Description: {user.description}</Text>
+            <Text style={{fontSize: 64}}>Your CATS!</Text>
+            <Text style={{fontSize: 64, marginBottom: 100}}>
+              PHOTOS.OF.YOUR.CATS
+            </Text>
+          </View>
+        )}
       </View>
     );
   };
+
   const router = [catList, Home, Favorites];
   const [view, setView] = useState(1);
+
   return (
     <View style={{flex: 1, backgroundColor: '#f35e5eed'}}>
-      <ScrollView style={styles.topContainer}>
-        <Text style={styles.title}>Pocket_Cats</Text>
-        {cats.length > 2 ? (
-          <View style={styles.catBar}>
-            <ScrollView style={styles.centeredView}>
-              {router[view]()}
-            </ScrollView>
-          </View>
-        ) : (
-          <View>
-            <Text style={styles.loadingScreen}>Please wait a moment...</Text>
-          </View>
-        )}
-      </ScrollView>
-      <NavBar styles={styles} view={view} setView={setView} />
+      <Text style={styles.title}>Pocket_Cats</Text>
+      {cats.length > 2 ? (
+        <View style={styles.centeredView}>{router[view]()}</View>
+      ) : (
+        <Text style={styles.loadingScreen}>Please wait a moment...</Text>
+      )}
+      <NavBar view={view} setView={setView} />
     </View>
   );
 };
