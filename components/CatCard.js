@@ -25,7 +25,7 @@ const CatCard = ({cat}) => {
 
   return (
     <>
-      <Pressable key={cat.id} onPress={animate} style={styles.catCardOuter}>
+      <Pressable onPress={animate} style={styles.catCardOuter}>
         <View style={styles.catContainer}>
           <View style={styles.catCardPicAndName}>
             {cat.image && (
@@ -44,7 +44,7 @@ const CatCard = ({cat}) => {
           {isExpanded && (
             <View>
               <Text style={styles.description}>{cat.description}</Text>
-              <View style={styles.bulletGrouping}>
+              <View>
                 <Text style={[styles.bulletPoint, styles.border]}>
                   vocalisation: {cat.vocalisation}
                 </Text>
@@ -61,7 +61,6 @@ const CatCard = ({cat}) => {
 };
 
 const styles = StyleSheet.create({
-  bulletGrouping: {},
   border: {
     borderWidth: 2,
     borderColor: '#20232a',

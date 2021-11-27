@@ -7,7 +7,6 @@ export const NavBar = ({setView}) => {
   const [favoritesPress, setFavoritesPress] = useState(false);
 
   const buttonPress = view => {
-    console.log('view', view);
     if (view === 0) {
       setListPress(true);
       setHomePress(false);
@@ -34,7 +33,7 @@ export const NavBar = ({setView}) => {
                 ? [styles.navButtonText, styles.pressed]
                 : styles.navButtonText
             }>
-            CatList
+            List
           </Text>
         </View>
       </Pressable>
@@ -58,7 +57,7 @@ export const NavBar = ({setView}) => {
                 ? [styles.navButtonText, styles.pressed]
                 : styles.navButtonText
             }>
-            Favorites
+            Favs
           </Text>
         </View>
       </Pressable>
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#20232a',
     borderRadius: 50,
-    height: 80,
+    height: 75,
     width: 80,
     textAlignVertical: 'center',
     shadowRadius: 30,
@@ -83,6 +82,7 @@ const styles = StyleSheet.create({
       height: 50,
     },
     shadowOpacity: 1,
+    fontSize: 16.5,
   },
   navButtonContainer: {
     justifyContent: 'center',
@@ -100,18 +100,10 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: 15,
-    left: 10,
-    right: 10,
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: '#9ecfff',
-    borderRadius: 15,
-    height: 90,
-    shadowOffset: {
-      width: 10,
-      height: 30,
-    },
-    shadowOpacity: 0.75,
-    shadowRadius: 3.5,
-    elevation: 5,
+    height: 80,
   },
 });
