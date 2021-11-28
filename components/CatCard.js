@@ -44,11 +44,11 @@ const CatCard = ({cat}) => {
           {isExpanded && (
             <View>
               <Text style={styles.description}>{cat.description}</Text>
-              <View>
-                <Text style={[styles.bulletPoint, styles.border]}>
+              <View style={styles.attributeContainer}>
+                <Text style={styles.attribute}>
                   vocalisation: {cat.vocalisation}
                 </Text>
-                <Text style={[styles.bulletPoint, styles.border]}>
+                <Text style={styles.attribute}>
                   affection level: {cat.affection_level}
                 </Text>
               </View>
@@ -61,6 +61,14 @@ const CatCard = ({cat}) => {
 };
 
 const styles = StyleSheet.create({
+  attribute: {
+    paddingLeft: 15,
+  },
+  attributeContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+  },
   border: {
     borderWidth: 2,
     borderColor: '#20232a',
