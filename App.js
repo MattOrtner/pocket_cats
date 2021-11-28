@@ -31,7 +31,7 @@ const DEFAULT_USER = {
 };
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
-
+console.log(`windowWidth`, windowWidth);
 const App = () => {
   if (
     Platform.OS === 'android' &&
@@ -50,10 +50,7 @@ const App = () => {
         const cat_obj = await axios.get(
           `https://api.thecatapi.com/v1/breeds?=${process.env.REACT_APP_HEADER}=${process.env.REACT_APP_API_KEY}`,
         );
-        if (cat_obj) {
-          const half = Math.round(cat_obj.data.length / 2);
-          setCats([...cat_obj.data.slice(0, half)]);
-        }
+        setCats(cat_obj.data);
       } catch (error) {
         console.error(error);
       }
@@ -88,6 +85,7 @@ const App = () => {
         renderItem={({item}) => {
           return <CatCard cat={item} />;
         }}
+        showsVerticalScrollIndicator
       />
     );
   };
@@ -140,12 +138,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontStyle: 'italic',
     textAlign: 'center',
-    paddingTop: 50,
-    paddingBottom: 20,
-    fontWeight: '900',
+    padding: 5,
+    fontWeight: '700',
   },
   image: {
     height: 100,
