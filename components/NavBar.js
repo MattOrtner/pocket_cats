@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Pressable, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 export const NavBar = ({setView}) => {
   const [listPress, setListPress] = useState(false);
@@ -25,7 +25,7 @@ export const NavBar = ({setView}) => {
 
   return (
     <View style={styles.navBar}>
-      <Pressable onPress={() => buttonPress(0)} style={styles.navButton}>
+      <TouchableOpacity onPress={() => buttonPress(0)} style={styles.navButton}>
         <View style={styles.navButtonContainer}>
           <Text
             style={
@@ -36,8 +36,8 @@ export const NavBar = ({setView}) => {
             List
           </Text>
         </View>
-      </Pressable>
-      <Pressable onPress={() => buttonPress(1)} style={styles.navButton}>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => buttonPress(1)} style={styles.navButton}>
         <View style={styles.navButtonContainer}>
           <Text
             style={
@@ -48,8 +48,8 @@ export const NavBar = ({setView}) => {
             Home
           </Text>
         </View>
-      </Pressable>
-      <Pressable onPress={() => buttonPress(2)} style={styles.navButton}>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => buttonPress(2)} style={styles.navButton}>
         <View style={styles.navButtonContainer}>
           <Text
             style={
@@ -60,7 +60,7 @@ export const NavBar = ({setView}) => {
             Favs
           </Text>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };
