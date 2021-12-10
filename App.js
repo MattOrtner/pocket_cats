@@ -14,21 +14,20 @@ import {
   View,
   UIManager,
   FlatList,
-  Dimensions,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
 import CatCard from './components/CatCard';
 import {NavBar} from './components/NavBar';
+import Home from './components/Home';
 import CatCardCompact from './components/CatCardCompact';
+
 
 const DEFAULT_USER = {
   name: 'Matthew',
   lastName: 'Ortner',
   description: 'YeaYea I love my cat big WOOP!',
 };
-
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 const App = () => {
   if (
@@ -115,7 +114,6 @@ const App = () => {
 
   const router = [catList, Home, Favorites];
   const [view, setView] = useState(1);
-
   return (
     <View style={{flex: 1, backgroundColor: '#f35e5eed'}}>
       <Text style={styles.title}>Pocket_Cats</Text>
