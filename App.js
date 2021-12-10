@@ -20,6 +20,8 @@ import {DEFAULT_DATA} from './default_data';
 import CatCard from './components/CatCard';
 import {NavBar} from './components/NavBar';
 import Home from './components/Home';
+import CatCardCompact from './components/CatCardCompact';
+
 
 const DEFAULT_USER = {
   name: 'Matthew',
@@ -55,8 +57,9 @@ const App = () => {
   const catList = () => {
     return (
       <FlatList
+        key={'list'}
         data={cats}
-        style={{flex: 1}}
+        style={styles.flex}
         renderItem={({item}) => {
           return <CatCard cat={item} />;
         }}
@@ -74,22 +77,26 @@ const App = () => {
 
   const Favorites = () => {
     return (
-      <FlatList
-        data={returnOurFavorites()}
-        style={{flex: 1}}
-        renderItem={({item}) => {
-          return <CatCard cat={item} />;
-        }}
-        showsVerticalScrollIndicator
-      />
+      <View style={styles.flex}>
+        <Text style={{textAlign: 'center'}}>favs</Text>
+        <FlatList
+          key={'favorites'}
+          data={returnOurFavorites()}
+          style={styles.flex}
+          renderItem={({item}) => {
+            return <CatCardCompact cat={item} />;
+          }}
+          showsVerticalScrollIndicator
+        />
+      </View>
     );
   };
 
   const Home = () => {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.flex}>
         {user && (
-          <View style={{flex: 1}}>
+          <View style={styles.flex}>
             <Text style={{fontSize: 42}}>Profile</Text>
             <Text style={{fontSize: 64}}>PHOTO</Text>
             <Text style={{fontSize: 16}}>Name: {user.name}</Text>
@@ -121,6 +128,9 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   loadingScreen: {
     textAlign: 'center',
   },
