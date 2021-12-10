@@ -12,17 +12,14 @@ import {
   Platform,
   Text,
   View,
-  ScrollView,
   UIManager,
   FlatList,
-  VirtualizedList,
-  Dimensions,
 } from 'react-native';
 import axios from 'axios';
 import {DEFAULT_DATA} from './default_data';
 import CatCard from './components/CatCard';
 import {NavBar} from './components/NavBar';
-import {assertModuleSpecifier} from '@babel/types';
+import Home from './components/Home';
 
 const DEFAULT_USER = {
   name: 'Matthew',
@@ -30,8 +27,6 @@ const DEFAULT_USER = {
   description: 'YeaYea I love my cat big WOOP!',
 };
 
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
-console.log(`windowWidth`, windowWidth);
 const App = () => {
   if (
     Platform.OS === 'android' &&
@@ -112,7 +107,6 @@ const App = () => {
 
   const router = [catList, Home, Favorites];
   const [view, setView] = useState(1);
-
   return (
     <View style={{flex: 1, backgroundColor: '#f35e5eed'}}>
       <Text style={styles.title}>Pocket_Cats</Text>
